@@ -1,4 +1,4 @@
-import html
+from html import escape
 
 form = '''\
 <form method="post">
@@ -22,9 +22,8 @@ form = '''\
 </form>
 '''
 
-def write_form(error='', month='', day='', year=''):
-	return form % { 'error': html.escape(error),
-                        'month': html.escape(month),
-                        'day': html.escape(day),
-                        'year': html.escape(year)}
-
+def make_form(error='', month='', day='', year=''):
+	return form % { 'error': escape(error),
+					'month': escape(month),
+					'day': escape(day),
+					'year': escape(year)}

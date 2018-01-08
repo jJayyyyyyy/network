@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-months = ['January',
-		  'Feburary',
-		  'March',
-		  'April',
-		  'May',
-		  'June',
-		  'July',
-		  'August',
-		  'September',
-		  'October',
-		  'December']
+months = [  'January',
+			'Feburary',
+			'March',
+			'April',
+			'May',
+			'June',
+			'July',
+			'August',
+			'September',
+			'October',
+			'December']
 
 month_abbvs = dict( (m[:3].lower(), m) for m in months )
 

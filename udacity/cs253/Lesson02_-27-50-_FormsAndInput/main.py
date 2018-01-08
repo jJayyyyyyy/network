@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def get():
-	return Form.write_form()
+	return Form.make_form()
 
 @app.route('/', methods=['POST'])
 def post():
@@ -21,7 +21,7 @@ def post():
 	s_year = CheckDate.valid_year(us_year)
 
 	if not ( s_month and s_day and s_year ):
-		return Form.write_form(error='Invalid Date', month=us_month, day=us_day, year=us_year)
+		return Form.make_form(error='Invalid Date', month=us_month, day=us_day, year=us_year)
 	else:
 		return redirect(url_for('SuccessLoginHandler'))
 
