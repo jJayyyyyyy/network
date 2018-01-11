@@ -1,8 +1,10 @@
+import os
 from html import escape
 
 def fill_template(name='index', **kw):
 	try:
-		filename = './templates/%s.html' % name
+		filename = '%s.html' % name
+		path = os.path.join('.', 'templates', filename)
 		with open(filename, 'r') as f:
 			page = f.read()
 		args = dict( (key, escape(val)) for (key, val) in kw.items() )
