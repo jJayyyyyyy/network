@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Sign Up</title>
+		<link rel="stylesheet" href="../static/style.css">
+	</head>
+	<body>
+		<h2>Sign Up</h2>
+		<form method="post">
+			<table>
+				<tr>
+					<td class="signup_label">Username</td>
+					<td><input type="text" name="username" value="%(username)s"></td>
+					<td class="signup_error">%(username_error)s</td>
+				</tr>
+				<tr>
+					<td class="signup_label">Password</td>
+					<td><input type="password" name="password" value=""></td>
+					<td class="signup_error">%(password_error)s</td>
+				</tr>
+				<tr>
+					<td class="signup_label">Verify Password</td>
+					<td><input type="password" name="verify" value=""></td>
+					<td class="signup_error">%(verify_error)s</td>
+				</tr>
+				<tr>
+					<td class="signup_label">Email (Optional)</td>
+					<td><input type="text" name="email" value="%(email)s"></td>
+					<td class="signup_error">%(email_error)s</td>
+				</tr>
+			</table>
+			<input type="submit">
+		</form>
+		<br><br><a href="/">Back</a>
+	</body>
+</html>
