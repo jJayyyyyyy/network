@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block title %}Sign Up{% endblock %}
+{% block body %}
+	<h2>Sign Up</h2>
+	<form method="post">
+		<table>
+			<tr>
+				<td class="signup_label">Username</td>
+				<td><input type="text" name="username" value="{{ username }}"></td>
+				<td class="signup_error">{{ username_error }}</td>
+			</tr>
+			<tr>
+				<td class="signup_label">Password</td>
+				<td><input type="password" name="password" value=""></td>
+				<td class="signup_error">{{ password_error }}</td>
+			</tr>
+			<tr>
+				<td class="signup_label">Verify Password</td>
+				<td><input type="password" name="verify" value=""></td>
+				<td class="signup_error">{{ verify_error }}</td>
+			</tr>
+			<tr>
+				<td class="signup_label">Email (Optional)</td>
+				<td><input type="text" name="email" value="{{ email }}"></td>
+				<td class="signup_error">{{ email_error }}</td>
+			</tr>
+		</table><br/>
+		<input type="submit">
+	</form>
+{% endblock %}
