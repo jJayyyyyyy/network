@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}FizzBuzz{% endblock %}
+
+{% block body %}
+	<form>
+		<label>
+			Please input n: 
+			<input type="text" name="n">
+			<br><br>
+			<input type="submit">
+		</label>
+	</form>
+	<ol>
+	{% for item in FizzBuzz %}
+		<li>{{ item }}</li>
+	{% endfor %}
+	</ol>
+{% endblock %}

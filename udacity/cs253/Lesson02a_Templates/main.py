@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 from flask import Flask, request, redirect, url_for
-import Page, Check, ROT13
+import Page, Check
 
 app = Flask(__name__)
+
+@app.route('/fizzbuzz', methods=['GET'])
+def get_fizzbuzz():
+	n = request.args.get('n')
+	return Page.render_fizzbuzz(n)
 
 @app.route('/', methods=['GET'])
 def get_index():
@@ -15,7 +20,7 @@ def get_rot13():
 
 @app.route('/rot13', methods=['POST'])
 def post_rot13():
-	text = ROT13.encode( request.form['text'] )
+	text = request.form.get('text')
 	return Page.render_rot13(text)
 
 @app.route('/signup', methods=['GET'])

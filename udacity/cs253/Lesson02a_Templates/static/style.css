@@ -1,3 +1,8 @@
+marquee.index_hello_world {
+	color: red;
+	font-size: 200%;
+}
+
 div.rot13_description {
 	width: 400px;
 	align: left;

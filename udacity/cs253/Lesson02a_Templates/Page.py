@@ -1,6 +1,7 @@
 from html import escape
-from flask import render_template
+from flask import render_template # flask will help us auto escape html
 import os
+import ROT13, FizzBuzz
 
 def fill_template(name='index', **kw):
 	filename = '%s.html' % name
@@ -14,11 +15,17 @@ def get_default_signup_args():
 			'email': '',
 			'email_error': ''}
 
+def render_fizzbuzz(n):
+	fizzbuzz = FizzBuzz.get(n)
+	page = fill_template('fizzbuzz', FizzBuzz=fizzbuzz)
+	return page
+
 def render_index():
 	page = fill_template('index')
 	return page
 
 def render_rot13(text=''):
+	text = ROT13.encode(text)
 	args = {'text': text}
 	return fill_template('rot13', **args)
 
