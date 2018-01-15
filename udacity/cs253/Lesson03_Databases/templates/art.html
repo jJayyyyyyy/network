@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block title %}ASCII Arts{% endblock %}
+
+{% block script %}
+<script type="text/javascript" src="{{ url_for('static', filename='toggle.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+	<div>
+		<form method="post">
+			<label>
+				<div>title</div>
+				<input type="text" name="title" value="">
+			</label><br>
+			<label>
+				<div>art</div>
+				<textarea name="art"></textarea>
+			</label><br>
+			<label>
+				<div>delete id</div>
+				<input type="text" name="delete_id" value="">
+			</label><br>
+			<input type="submit">
+		</form>
+	</div>
+	<div>
+		<form method="post">
+
+		</form>
+	</div>
+	<hr>
+	<div class="artwork_list" id="artwork_list">
+	{% for artwork in artwork_list %}
+		<div class="artwork">
+			<div>
+				<span class="artwork-title">title: {{ artwork.title }} </span>
+				<span class="artwork-id"> id: {{ artwork.id }}</span>
+			</div>
+			<pre class="artwork-art">{{ artwork.art }}</pre>
+		</div>
+	{% endfor %}
+	</div>
+	<div class="background_inverter">   
+		<form>
+			<input id="btn" class="background_inverter_button" onclick="toggle_bg()" value="Light on Dark" type="button">
+		</form>
+	</div>
+{% endblock %}
