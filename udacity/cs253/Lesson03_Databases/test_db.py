@@ -1,4 +1,4 @@
-import sqlite3
+import sqlite3, logging
 db_name='ascii_art.db'
 
 def do_sql(sql, args=''):
@@ -9,8 +9,8 @@ def do_sql(sql, args=''):
 		cur.execute(sql, args)
 		res = cur.fetchall()
 		conn.commit()
-	except sqlite3.Error as e:
-		print(e)
+	except Exception as e:
+		logging.exception(e)
 	finally:
 		cur.close()
 		conn.close()
