@@ -1,6 +1,6 @@
 drop table if exists entries;
 create table entries (
-	id integer primary key autoincrement,
-	title text not null,
-	art text not null
+	art_id integer primary key autoincrement,
+	subject text not null,
+	content text not null
 );

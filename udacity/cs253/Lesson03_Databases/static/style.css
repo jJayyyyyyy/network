@@ -47,17 +47,17 @@ hr {
 	margin-top: 20px;
 }
 
-.artwork-title {
+.artwork-subject {
 	font-weight: bold;
 	font-size: 20px;
 }
 
-.artwork-body {
+.artwork-content {
 	margin: 0;
 	font-size: 16px;
 }
 
-.artwork-id {
+.artwork-art_id {
 	float: right;
 }
 
