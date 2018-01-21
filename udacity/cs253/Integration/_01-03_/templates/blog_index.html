@@ -1,0 +1,18 @@
+{% extends "blog_layout.html" %}
+
+{% block title %}Blog{% endblock %}
+
+{% block body %}
+<div id="post-list">
+	{% for post in post_list %}
+	<div class="post">
+		<div class="post-heading">
+			<a href="/blog/{{ post.post_id }}" class="post-subject">{{ post.subject }}</a>
+			<div class="post-date">{{ post.update_date }}</div>
+		</div>
+		<div class="post-content">{{ post.content }}</div>
+	</div>
+	<br><br>
+	{% endfor %}
+</div>
+{% endblock %}

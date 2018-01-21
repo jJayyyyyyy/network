@@ -1,0 +1,18 @@
+{% extends "default_layout.html" %}
+
+{% block title %}FizzBuzz{% endblock %}
+
+{% block body %}
+	<form>
+		<label>
+			Please input n: 
+			<input type="text" name="fizzbuzz_strn"><br>
+			<input type="submit">
+		</label>
+	</form>
+	<ol>
+	{% for fizzbuzz in fizzbuzz_list %}
+		<li>{{ fizzbuzz }}</li>
+	{% endfor %}
+	</ol>
+{% endblock %}
