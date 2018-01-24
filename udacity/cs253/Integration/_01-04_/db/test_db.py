@@ -5,6 +5,7 @@ def do_sql(sql, args=''):
 	res = None
 	try:
 		conn = sqlite3.connect(db_name)
+		conn.row_factory = sqlite3.Row
 		cur = conn.cursor()
 		cur.execute(sql, args)
 		res = cur.fetchall()
@@ -63,6 +64,7 @@ def init():
 				email text)'
 	do_sql(sql)
 
+
 def test():
 	# init()
 	# insert_art()
@@ -73,7 +75,11 @@ def test():
 	# update()
 	# insert_user()
 	record_list = get_record_list()
+	# print(record_list[0]['username'])
 	for item in record_list:
 		print(*item)
+		print(dict(item).get('username'))
+	# 	print(item['username'])
+	
 
 test()

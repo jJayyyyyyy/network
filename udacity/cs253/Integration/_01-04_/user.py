@@ -1,4 +1,5 @@
-import re
+import re, random, hashlib
+from string import ascii_letters as letters
 from page import Page
 from database import Database
 
@@ -22,23 +23,36 @@ def valid_email(email):
 	else:
 		return re_email.match(email)
 
+def make_salt(length = 5):
+	# salt = []
+	# for i in range(length):
+	# 	salt.append(random.choice(letters))
+	# return ''.join(salt)
+	return ''.join(random.choice(letters) for x in range(length))
 
-def hash(pw):
-	return pw
+def make_pw_hash(username, password, salt=None):
+	if not salt:
+		salt = make_salt()
+	enc = (username + password + salt).encode('utf-8')
+	pw_hash = hashlib.sha256(enc).hexdigest()
+	return '%s,%s' % (salt, pw_hash)
+
+def check_pw_hash(username, password, pw_hash):
+	salt = pw_hash.split(',')[0]
+	return pw_hash == make_pw_hash(username, password, salt)
+
 
 class User(object):
-	def __init__(self, **form):
+	def __init__(self, form):
+		self.user_id = str(form.get('user_id'))
 		self.username = form.get('username')
-		pw = form.get('password')
-		self.pw_hash = pw # HASH
+		self.password = form.get('password')
 		self.email = form.get('email')
-		# self.username = username
-		# self.pw_hash = get_pw_hash(username, pw)
-		# self.email = email
 
 class Record(User):
 	def insert(self):
 		query = 'insert into users (username, pw_hash, email) values (?, ?, ?)'
+		self.pw_hash = make_pw_hash(self.username, self.password)
 		args = (self.username, self.pw_hash, self.email)
 		return Database().query_db(query, args)
 
@@ -46,13 +60,11 @@ class Record(User):
 		query = 'select * from users where username = ?'
 		args = (self.username, )
 		record_list = Database().query_db(query, args)
-		if record_list == []:
-			return None
-		else:
-			return record_list[0]
+		return record_list
 
 	def update(self):
 		query = 'update users set pw_hash = ?, email = ? where username = ?'
+		self.pw_hash = make_pw_hash(self.password)
 		args = (self.pw_hash, self.email, self.username)
 		return Database().query_db(query, args)
 
@@ -74,14 +86,11 @@ def check_valid(form):
 	if valid:
 		form['valid'] = valid
 	else:
-		for item in form.items():
-			print(item)
 		form['password'] = form['verify'] = ''
 	return form
 
 def check_usable(form):
-	print(form)
-	if Record(**form).retrieve() == None:
+	if not Record(form).retrieve():
 		form['usable'] = True
 	else:
 		form['username_error'] = 'Username already taken, please choose another one.'
@@ -89,51 +98,43 @@ def check_usable(form):
 
 class SignupHandler(Page):
 	filename = 'signup.html'
-
 	def get(self):
 		return self.render(self.filename)
 
 	def post(self):
-		# check if valid
-		form = check_valid( self.form() )
+		form = check_valid(self.form() )	# check if valid
 		if form.get('valid') == True:
-			# check if exist
-			form = check_usable(self.form())
+			form = check_usable(self.form())	# check if exist
 			if form.get('usable') == True:
 				return self.register(form)
 		return self.render(self.filename, **form)
 
 	def register(self, form):
-		# insert database
-		Record(**form).insert()
-		return 'Welcome, %s' % form.get('username')
-		# login, cookie thing
-
-		return self.login()
-		
-		# return self.login()
-		# redirect
-		# return self.redirect('/')
+		Record(form).insert()
+		record_list = Record(form).retrieve()
+		if record_list:
+			user = User(form)
+			return self.login(user)	# login and set cookie
+		else:
+			return 'Oops...something went wrong...'
 		
 class SigninHandler(Page):
 	filename = 'signin.html'
-
 	def get(self):
 		return self.render(self.filename)
 
 	def post(self):
-		us_name = self.form().get('username')
-		us_pw = self.form().get('password')
-		
-		record = Record(username=us_name).retrieve()
-		if record:
-			s_user_id = record[0]
-			s_username = record[1]
-			s_pw_hash = record[2]
-			if us_pw == s_pw_hash:
-				return self.login(user_id=str(s_user_id))
-		error = 'invalid login'
-		return self.render(self.filename, error=error)
+		us_form = self.form()
+		record_list = Record(us_form).retrieve()
+		if record_list:
+			us_username = us_form.get('username')
+			us_pw = us_form.get('password')
+			record = dict(record_list[0])
+			pw_hash = record.get('pw_hash')
+			if check_pw_hash(us_username, us_pw, pw_hash):
+				user = User(record)
+				return self.login(user)# sign in and set cookie
+		return self.render(self.filename, error='invalid login')
 		
 class SignoutHandler(Page):
 	def get(self):

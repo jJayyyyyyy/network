@@ -20,20 +20,22 @@ def init_db():
 
 class Database(object):
 	def __init__(self):
-		self.conn = sqlite3.connect(DATABASE)
-		self.cur = self.conn.cursor()
+		pass
 
 	def query_db(self, query, args=()):
 		try:
-			self.cur.execute(query, args)
-			record_list = self.cur.fetchall()
-			self.conn.commit()
+			conn = sqlite3.connect(DATABASE)
+			conn.row_factory = sqlite3.Row
+			cur = conn.cursor()
+			cur.execute(query, args)
+			record_list = cur.fetchall()
+			conn.commit()
 		except Exception as e:
 			record_list = []
 			logging.exception(e)
 			print('query failed')
 		finally:
-			self.cur.close()
-			self.conn.close()
+			cur.close()
+			conn.close()
 			print('db closed')
 			return record_list
