@@ -37,19 +37,30 @@ class Page(MethodView):
 	def login(self, user):
 		resp = make_response(self.redirect('/welcome'))
 		resp.set_cookie(key='username', value=user.username)
+		
+		user_id = user.user_id
+		username = user.username
 		key = 'user_id'
-		val = make_secure_cookie(msg=user.user_id)
+		val = make_secure_cookie(user.user_id, username)
 		resp.set_cookie(key=key, value=val)
 		return resp
 
-def make_secure_cookie(msg):
+	# TODO
+	def check_valid_cookie(self):
+		val = self.cookies().get('user_id')
+		username = self.cookies().get('username')
+		return check_secure_cookie(val, username)
+
+def make_secure_cookie(user_id, username):
+	msg = user_id + username
 	digest = hmac.new(hkey, msg.encode()).hexdigest()
-	val = '%s|%s' % (msg, digest)
+	val = '%s|%s' % (user_id, digest)
 	return val
 
 # TODO
-def check_secure_cookie(self, val):
-	msg = val.split('|')[0]
-	us_val = make_secure_cookie(msg)
-	return val == us_val
+def check_secure_cookie(val, username):
+	if val:
+		user_id = val.split('|')[0]
+		us_val = make_secure_cookie(user_id, username)
+		return val == us_val
 	

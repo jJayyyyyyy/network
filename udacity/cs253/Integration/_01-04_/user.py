@@ -121,7 +121,10 @@ class SignupHandler(Page):
 class SigninHandler(Page):
 	filename = 'signin.html'
 	def get(self):
-		return self.render(self.filename)
+		if self.check_valid_cookie():
+			return self.redirect('/welcome')
+		else:
+			return self.render(self.filename)
 
 	def post(self):
 		us_form = self.form()
