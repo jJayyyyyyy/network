@@ -1,14 +1,38 @@
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
 
-<div id="app">
-	<p>{{ message }}</p>
+<div id="app-7">
+	<ol>
+		<new-comp
+			v-for="item in item_list"
+			v-bind:item="item">
+		</new-comp>
+	</ol>
 </div>
 
-<script>
+<script type="text/javascript">
+Vue.component('new-comp', {
+	props: ['item'],
+	template: '<li>{{ item.text }}</li>'
+})
+
 var app = new Vue({
-	el: '#app',
+	el: '#app-7',
 	data: {
-		message: 'hello world, welcome to vue.js!'
+		item_list: [
+			{text: 'apple'},
+			{text: 'banana'},
+			{text: 'orange'}
+		]
 	}
 })
 </script>
+
+<ul>
+	<li>component 可以初步理解为class，或者struct，或者函数</li>
+	<li>
+		一个tag（标签），其内容和attribute可以自定义
+	</li>
+	<li>
+		将一个页面分为不同的几个区域，每个区域抽象为一个类。html里面只管怎么区分，具体的内容在js里面写，然后通过vue填充并渲染页面
+	</li>
+</ul>
