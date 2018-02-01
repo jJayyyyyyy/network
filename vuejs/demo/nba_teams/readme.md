@@ -77,3 +77,29 @@
 	}
 	```
 
+###  2.component
+
+*	异步加载的东西，暂时无法做到用v-if先判断，再更新到component
+
+	举例：
+
+	```html
+	<tbody v-if="teams_east">
+		<tr v-for="ix in range">
+			<td-team v-for="region in eastRegions"
+					v-bind:team="teams_east[region][ix]">
+			</td-team>
+		</tr>
+	</tbody>
+	```
+
+	```javascript
+	Vue.component('td-team', {
+		props: ['team'],
+		template: '<td>{{ team['name'] }}</td>'
+	})
+	```
+
+	说明：在xhr获得的json的teams之前，teams_east还是Undefined，就算用了if进行conditional render`<tbody v-if="teams_east">`也绕不开
+
+	因此，猜测component必须有对应实体
