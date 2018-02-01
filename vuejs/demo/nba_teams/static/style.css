@@ -1,0 +1,51 @@
+#demo {
+	font-family: 'Helvetica', Arial, sans-serif;
+}
+
+a {
+	text-decoration: none;
+	color: #f66;
+}
+
+li {
+	line-height: 1.5em;
+	margin-bottom: 20px;
+}
+
+.author, .date {
+	font-weight: bold;
+}
+
+.nba-container {
+	display: grid;
+	grid-template-columns: auto auto;
+	grid-gap: 10px;
+/* 	background-color: #2196F3; */
+	padding: 10px;
+}
+
+div.east-container, div.west-container {
+	border: 1px solid #e8e8e8;
+}
+
+div.east-head, div.west-head {
+	text-align: center;
+}
+
+table {
+	width: 100%;
+	border: 1px solid #e8e8e8;
+	border-collapse: collapse;
+}
+
+thead, tbody, img {
+	vertical-align: middle;
+}
+
+td {
+	text-align: center;	
+}
+
+td:hover, th:hover {
+	background-color: #f5f5f5;
+}

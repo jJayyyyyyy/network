@@ -1,36 +1,53 @@
-var apiURL = 'http://matchweb.sports.qq.com/rank/team?competitionId=100000&from=NBA_PC'
+var url_teams = './assets/teams.json'
+var nbateams = null
 
-var nbateam
+var app = new Vue({
+	el: '#app',
+	data: {
+		conference: ['east', 'west'],
+		eastRegions: ['eastsouth', 'central', 'atlantic'],
+		westRegions: ['pacific', 'westnorth', 'westsouth'],
+		currentRegion: '',
+		range: [0, 1, 2, 3, 4],
+		// teams: null,
+		teams_east: null,
+		teams_west: null,
+		message: null
+	},
 
-var demo = new Vue({
-  el: '#demo',
-  data: {
-    branches: ['atlantic', 'central', 'east', 'eastsouth', 'pacific', 'west', 'westnorth', 'westsouth'],
-    currentBranch: 'atlantic',
-    commits: [0]
-  },
+	created: function () {  this.fetchData()  },
 
-  created: function () {
-      var js = document.createElement('script')
-      var head = document.getElementsByTagName('head')[0]
-      js.src = apiURL+'&callback=refreshTeam'
-      head.appendChild(js)
-  },
+	// watch: {
+	// 	teams: 'getTeams'
+	// },
 
-  watch: {
-    currentBranch: 'getBranch'
-  },
+	// text formatting
+	filters: {
+		getImage: function(teamId){
+			return `./assets/${teamId}.png`
+		}
+	},
 
-  methods: {
-    getBranch: function(){
-      this.commits = teams[this.currentBranch]
-      console.log(this.currentBranch)
-    }
-  }
+	methods: {
+		fetchData: function () {
+			var xhr = new XMLHttpRequest()
+			var self = this
+			xhr.onreadystatechange = function(){
+				if(xhr.readyState === 4 && xhr.status === 200){
+					nbateams = JSON.parse(xhr.responseText)
+					// self.teams = nbateams
+					self.teams_east = nbateams['east']
+					self.teams_west = nbateams['west']
+				}
+			}
+			xhr.open('GET', url_teams);
+			xhr.send()
+		},
+		getTeams: function(){
+			this.teams = nbateams
+		},
+		getRegion: function(){
+			this.teams = nbateams
+		}
+	}
 })
-
-function refreshTeam(data){
-  teams = data[1]
-  demo.commits = teams['atlantic']
-  console.log(data)
-}

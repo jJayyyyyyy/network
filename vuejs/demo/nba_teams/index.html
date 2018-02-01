@@ -1,50 +1,63 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>NBA</title>
-    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
-    <style>
-      #demo {
-        font-family: 'Helvetica', Arial, sans-serif;
-      }
-      a {
-        text-decoration: none;
-        color: #f66;
-      }
-      li {
-        line-height: 1.5em;
-        margin-bottom: 20px;
-      }
-      .author, .date {
-        font-weight: bold;
-      }
-    </style>
-    <!-- Delete ".min" for console warnings in development -->
-    <script src="../../dist/vue.min.js"></script>
-  </head>
-  <body>
-    <div id="demo">
-      <h1>太平洋赛区</h1>
-      <template v-for="branch in branches">
-        <input type="radio"
-          :id="branch"
-          :value="branch"
-          name="branch"
-          v-model="currentBranch">
-        <label :for="branch">{{ branch }}</label>
-      </template>
-
-      <ul>
-        <li v-for="record in commits">
-          <span>{{ record.fullCnName }}</span>
-          <!-- <a :href="record.html_url" target="_blank" class="commit">{{ record.sha.slice(0, 7) }}</a>
-          - <span class="message">{{ record.commit.message | truncate }}</span><br>
-          by <span class="author"><a :href="record.author.html_url" target="_blank">{{ record.commit.author.name }}</a></span>
-          at <span class="date">{{ record.commit.author.date | formatDate }}</span> -->
-        </li>
-      </ul>
-    </div>
-    <script src="app.js"></script>
-  </body>
+	<head>
+		<title>NBA</title>
+		<link rel="stylesheet" href="./static/style.css" >
+		<script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+	</head>
+	<body>
+		<div id="app">
+			<h1>NBA statistics</h1>
+			<div class="nba-container">
+				<div class="east-container">
+					<div class="east-head"><h2>东部联盟</h2></div>
+					<div class="east-table">
+						<table>
+							<thead>
+								<tr>
+									<th>东南赛区</th>
+									<th>中部赛区</th>
+									<th>大西洋赛区</th>
+								</tr>
+							</thead>
+							<tbody v-if="teams_east">
+								<tr v-for="ix in range">
+									<td v-for="region in eastRegions">
+											<img v-bind:src="teams_east[region][ix]['teamId'] | getImage" width="60">
+											<span>{{ teams_east[region][ix]['name'] }}</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="west-container">
+					<div class="west-head">
+						<h2>西部联盟</h2>
+					</div>
+					<div class="west-table">
+						<table>
+							<thead>
+								<tr>
+									<th>太平洋赛区</th>
+									<th>西北赛区</th>
+									<th>西南赛区</th>
+								</tr>
+							</thead>
+							<tbody v-if="teams_west">
+								<tr v-for="ix in range">
+									<td v-for="region in westRegions">
+										<img v-bind:src="teams_west[region][ix]['teamId'] | getImage" width="60">
+										<span>{{ teams_west[region][ix]['name'] }}</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="app.js"></script>
+	</body>
 
 </html>
