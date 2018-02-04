@@ -49,3 +49,44 @@ td {
 td:hover, th:hover {
 	background-color: #f5f5f5;
 }
+
+polygon {
+	fill: #42b983;
+	opacity: .5;
+}
+
+polygon.base {
+	fill: transparent;
+	stroke: #999;
+}
+
+.chart-container{
+	text-align:center;
+	display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+	text-align:left;
+    white-space: pre;
+    visibility: hidden;
+    background-color: #2b8094;
+    color: #fff;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    
+    /* Fade in tooltip - takes 1 second to go from 0% to 100% opac: */
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 0.5;
+}

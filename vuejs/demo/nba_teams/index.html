@@ -3,7 +3,27 @@
 	<head>
 		<title>NBA</title>
 		<link rel="stylesheet" href="./static/style.css" >
-		<script src="https://unpkg.com/vue/dist/vue.min.js"></script>
+		<!-- <script src="https://unpkg.com/vue/dist/vue.min.js"></script> -->
+		<script src="https://unpkg.com/vue@latest/dist/vue.js"></script>
+		<script type="text/x-template" id="polygraph-template">
+			<g>
+				<polygon :points="points"></polygon>
+				<polygon :points="base1" class="base"></polygon>
+				<polygon :points="base2" class="base"></polygon>
+				<polygon :points="base3" class="base"></polygon>
+				<polygon :points="base4" class="base"></polygon>
+				<polygon :points="axis" class="base"></polygon>
+				<axis-label v-for="(stat, index) in stats"
+													:stat="stat"
+													:index="index"
+													:key="index"
+				></axis-label>
+			</g>
+		</script>
+		<!-- template for the axis label component. -->
+		<script type="text/x-template" id="axis-label-template">
+			<text :x="point.x" :y="point.y">{{stat.label}}</text>
+		</script>
 	</head>
 	<body>
 		<div id="app">
@@ -47,14 +67,26 @@
 							<tbody v-if="teams_west">
 								<tr v-for="ix in range">
 									<td v-for="region in westRegions">
-										<img v-bind:src="teams_west[region][ix]['teamId'] | getImage" width="60">
-										<span>{{ teams_west[region][ix]['name'] }}</span>
+										<a v-bind:href="teams_west[region][ix]['teamId'] | getTeamPage">
+											<img v-bind:src="teams_west[region][ix]['teamId'] | getImage" width="60">
+											<span v-on:mouseover="getChart('west', region, ix+1)">{{ teams_west[region][ix]['name'] }}</span>
+										</a>
 									</td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
 				</div>
+			</div>
+			<div class="chart-container">
+				<div></div>
+				<div class="tooltip">
+					<svg v-if="stats" width="300" height="300">
+						<polygraph :stats="stats" ></polygraph>
+					</svg>
+					<span class="tooltiptext">{{ rankInfo }}</span>
+				</div>
+				<div></div>
 			</div>
 		</div>
 		<script src="app.js"></script>
