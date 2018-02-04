@@ -1,0 +1,9 @@
+.rot13-description {
+	width: 400px;
+	text-align: left;
+}
+
+.rot13-textarea {
+	height: 100px;
+	width: 400px;
+}
