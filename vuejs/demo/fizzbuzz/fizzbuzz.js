@@ -1,5 +1,5 @@
 var app = new Vue({
-	el: '#app',
+	el: '#fizzbuzz',
 	data: {
 		num: null,
 		FB: []
@@ -19,12 +19,11 @@ var app = new Vue({
 				}else{
 					fb = i
 				}
-				console.log(fb)
 				FB.push(fb)
 			}
-			console.log(FB)
 			this.FB = FB
 			this.show = !this.show
+			console.log(FB)
 		}
 	}
 })
