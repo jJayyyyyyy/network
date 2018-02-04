@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sign Up</title>
+	<script src="https://unpkg.com/vue@latest/dist/vue.js"></script>
+	<link type="text/css" rel="stylesheet" href="signup.css">
+</head>
+<body>
+<div id="signup">
+	<h2>Sign Up</h2>
+	<form methods="post" v-on:submit.prevent="succ">
+		<table>
+			<tr>
+				<td class="signup-label">Username</td>
+				<td><input v-model="username" type="text" name="username" placeholder="3~20 alphanum"></td>
+				<td class="signup-error">{{ usernameError }}</td>
+			</tr>
+			<tr>
+				<td class="signup-label">Password</td>
+				<td><input v-model="password" type="password" name="password" placeholder="3~20 characters"></td>
+				<td class="signup-error">{{ passwordError }}</td>
+			</tr>
+			<tr>
+				<td class="signup-label">Verify Password</td>
+				<td><input v-model="verify" type="password" name="verify" placeholder="verify your password"></td>
+				<td class="signup-error">{{ verifyError }}</td>
+			</tr>
+			<tr>
+				<td class="signup-label">Email (Optional)</td>
+				<td><input v-model="email" type="text" name="email" placeholder="user@gmail.com"></td>
+				<td class="signup-error">{{ emailError }}</td>
+			</tr>
+		</table><br><br>
+		<input v-if="showSubmit" type="submit">
+	</form>
+</div>
+</body>
+<script src="./signup.js"></script>
+</html>
