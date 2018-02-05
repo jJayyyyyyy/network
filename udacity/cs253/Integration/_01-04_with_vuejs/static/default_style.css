@@ -1,0 +1,17 @@
+div.rot13_description {
+	width: 400px;
+	align: left;
+}
+
+textarea.rot13_textarea {
+	height: 100px;
+	width: 400px;
+}
+
+td.signup_label {
+	text-align: right;
+}
+
+td.signup_error {
+	color: red;
+}

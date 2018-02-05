@@ -1,0 +1,87 @@
+body {
+	font-family: sans-serif;
+	width: 800px;
+	margin: 0 auto;
+	padding: 40px;
+}
+
+.error {
+	color: red;
+}
+
+span.form1 {
+	width: 500px;
+}
+
+span.form2 {
+	width: 200px;
+}
+
+label {
+	display: block;
+	font-size: 20px;
+}
+
+input[type=text] {
+	width: 400px;
+	font-size: 20px;
+	padding: 2px;
+}
+
+textarea {
+	width: 400px;
+	height: 200px;
+	font-size: 17px;
+	font-family: monospace;
+}
+
+input[type=submit] {
+	font-size: 24px;
+}
+
+hr {
+	margin: 40px auto;
+}
+
+.artwork + .artwork {
+	margin-top: 20px;
+}
+
+.artwork-subject {
+	font-weight: bold;
+	font-size: 20px;
+}
+
+.artwork-content {
+	margin: 0;
+	font-size: 16px;
+}
+
+.artwork-artwork_id {
+	float: right;
+}
+
+input.background_inverter_button {
+	font-size: 10px;
+	font-weight: bold;
+	color: white;
+	height: 20px;
+	background-color: #2a4767;
+	border-style: none;
+	border-color: #FFFFFF;
+	border-width: 1px;
+}
+
+div.background_inverter {
+	top: 300px;
+	border-style: solid;
+	border-color: white;
+	border-width: 1px;
+	position: fixed;
+    right: 100px;
+}
+
+/*div.artwork_list {
+	background: #2A4767;
+	color: #FFFFFF;
+}*/

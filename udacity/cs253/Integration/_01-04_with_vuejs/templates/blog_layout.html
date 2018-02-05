@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>{% block title %}{% endblock %}</title>
+		<link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='blog_style.css') }}">
+		{% block script %}{% endblock %}
+	</head>
+	<body>
+	{% block navibar %}
+		<ul>
+			<li class="navibar"><a href="/">Home</a></li>
+			<li class="navibar"><a href="/blog/new_post">new</a></li>
+		</ul>
+	{% endblock %}
+		<a href="/blog" class="blog-title">Blog</a>
+	{% block body%}
+	{% endblock%}	
+	</body>
+</html>
