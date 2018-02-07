@@ -25,7 +25,7 @@ class Record(Artwork):
 			query = 'select * from artworks order by artwork_id desc limit %d' % limit
 		return Database().query_db(query)
 	
-	def delete(self):
+	def delete(self, artwork_id):
 		query = 'delete from artworks where artwork_id = ?'
 		args = (artwork_id, )
 		Database().query_db(query, args)
@@ -46,17 +46,20 @@ class AsciiArtHandler(Page):
 		return self.render(self.filename, artwork_list=artwork_list)
 
 	def post(self):
-		subject = self.form().get('subject')
-		content = self.form().get('content')
-		if subject and content:
-			artwork_id = self.form().get('artwork_id')
-			if artwork_id:
-				Record(artwork_id, subject, content).update()
+		if self.check_valid_cookie():
+			subject = self.form().get('subject')
+			content = self.form().get('content')
+			if subject and content:
+				artwork_id = self.form().get('artwork_id')
+				if artwork_id:
+					Record(artwork_id, subject, content).update()
+				else:
+					Record(0, subject, content).insert()
+				return self.redirect('/ascii_art')
 			else:
-				Record(0, subject, content).insert()
-			return self.redirect('/ascii_art')
+				error = 'subject or content is empty'
+				return self.render(self.filename, error=error)
 		else:
-			error = 'subject or content is empty'
-			return self.render(self.filename, error=error)
+			return self.redirect('/signin')
 
 	

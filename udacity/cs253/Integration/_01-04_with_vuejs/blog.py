@@ -61,27 +61,39 @@ class GetPostHandler(Page):
 class NewPostHandler(Page):
 	filename = 'blog_new_post.html'
 	def get(self):
-		return self.render(self.filename)
+		if self.check_valid_cookie():
+			return self.render(self.filename)
+		else:
+			return self.redirect('/signin')	
 
 	def post(self):
-		update_date = self.get_date(2018, 1, 1)
-		subject = self.form().get('subject')
-		content = self.form().get('content')
-		if subject and content:
-			Record(0, update_date, subject, content).insert()
-		return self.redirect('/blog')
+		if self.check_valid_cookie():
+			update_date = self.get_date(2018, 1, 1)
+			subject = self.form().get('subject')
+			content = self.form().get('content')
+			if subject and content:
+				Record(0, update_date, subject, content).insert()
+			return self.redirect('/blog')
+		else:
+			return self.redirect('/signin')	
 
 class EditPostHandler(Page):
 	filename = 'blog_edit_post.html'
 	def get(self, post_id):
-		record_list = Record().retrieve(post_id=post_id)
-		post = get_post(record_list)
-		return self.render(self.filename, post=post)
+		if self.check_valid_cookie():
+			record_list = Record().retrieve(post_id=post_id)
+			post = get_post(record_list)
+			return self.render(self.filename, post=post)
+		else:
+			return self.redirect('/signin')	
 
 	def post(self, post_id):
-		update_date = self.get_date()
-		subject = self.form().get('subject')
-		content = self.form().get('content')
-		if subject and content:
-			Record(post_id, update_date, subject, content).update()
-		return self.redirect('/blog/%d' % post_id)
+		if self.check_valid_cookie():
+			update_date = self.get_date()
+			subject = self.form().get('subject')
+			content = self.form().get('content')
+			if subject and content:
+				Record(post_id, update_date, subject, content).update()
+			return self.redirect('/blog/%d' % post_id)
+		else:
+			return self.redirect('/signin')	
