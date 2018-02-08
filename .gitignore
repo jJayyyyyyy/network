@@ -11,3 +11,6 @@ Desktop.ini
 
 # Linux:
 *.*~
+
+# db
+*.db
