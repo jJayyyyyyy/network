@@ -1,34 +1,41 @@
-{% extends "default_layout.html" %}
-
-{% block title %}Sign Up{% endblock %}
-
-{% block body %}
-<h2>Sign Up</h2>
-<form method="post">
-	<table>
-		<tr>
-			<td class="signup_label">Username</td>
-			<td><input type="text" name="username" value="{{ username }}"></td>
-			<td class="signup_error">{{ username_error }}</td>
-		</tr>
-		<tr>
-			<td class="signup_label">Password</td>
-			<td><input type="password" name="password" value=""></td>
-			<td class="signup_error">{{ password_error }}</td>
-		</tr>
-		<tr>
-			<td class="signup_label">Verify Password</td>
-			<td><input type="password" name="verify" value=""></td>
-			<td class="signup_error">{{ verify_error }}</td>
-		</tr>
-		<tr>
-			<td class="signup_label">Email (Optional)</td>
-			<td><input type="text" name="email" value="{{ email }}"></td>
-			<td class="signup_error">{{ email_error }}</td>
-		</tr>
-	</table><br><br>
-	<input type="submit">
-</form>
-{% endblock %}
-
-
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sign Up</title>
+	<!--<script src="https://unpkg.com/vue@latest/dist/vue.js"></script>-->
+	<script src="./static/vue.js"></script>
+	<link type="text/css" rel="stylesheet" href="./static/signup.css">
+</head>
+<body>
+<button><a href="/">Home</a></button><br><br>
+<div id="signup">
+	<h2>Sign Up</h2>
+	<form method="post">
+		<table>
+			<tr>
+				<td class="signup-label">Username</td>
+				<td><input v-model="username" type="text" name="username" placeholder="3~20 alphanum"></td>
+				<td class="signup-error">{{ usernameError }}</td>
+			</tr>
+			<tr>
+				<td class="signup-label">Password</td>
+				<td><input v-model="password" type="password" name="password" placeholder="3~20 characters"></td>
+				<td class="signup-error">{{ passwordError }}</td>
+			</tr>
+			<tr>
+				<td class="signup-label">Verify Password</td>
+				<td><input v-model="verify" type="password" name="verify" placeholder="verify your password"></td>
+				<td class="signup-error">{{ verifyError }}</td>
+			</tr>
+			<tr>
+				<td class="signup-label">Email (Optional)</td>
+				<td><input v-model="email" type="text" name="email" placeholder="user@gmail.com"></td>
+				<td class="signup-error">{{ emailError }}</td>
+			</tr>
+		</table><br><br>
+		<input v-if="showSubmit" type="submit">
+	</form>
+</div>
+</body>
+<script src="./static/signup.js"></script>
+</html>
