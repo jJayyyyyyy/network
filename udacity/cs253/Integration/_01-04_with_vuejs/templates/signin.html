@@ -1,21 +1,31 @@
-{% extends "default_layout.html" %}
-
-{% block title %}Sign In{% endblock %}
-
-{% block body %}
-<h2>Sign In</h2>
-<form method="post">
-	<table>
-		<tr>
-			<td class="signup_label">Username</td>
-			<td><input type="text" name="username" value="{{ username }}"></td>
-		</tr>
-		<tr>
-			<td class="signup_label">Password</td>
-			<td><input type="password" name="password" value=""></td>
-		</tr>
-	</table><br><br>
-	<input type="submit">
-</form><br><br>
-<div class="error">{{ error }}</div>
-{% endblock %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Sign In</title>
+	<!--<script src="https://unpkg.com/vue@latest/dist/vue.js"></script>-->
+	<script src="./static/vue.js"></script>
+	<link type="text/css" rel="stylesheet" href="./static/signin.css">
+</head>
+<body>
+<button><a href="/">Home</a></button><br><br>
+<div id="signin">
+	<h2>Sign In</h2>
+	<form method="post">
+		<table>
+			<tr>
+				<td class="signup-label">Username</td>
+				<td><input v-model="username" type="text" name="username" placeholder="3~20 alphanum"></td>
+				<td class="signup-error">{{ usernameError }}</td>
+			</tr>
+			<tr>
+				<td class="signup-label">Password</td>
+				<td><input v-model="password" type="password" name="password" placeholder="3~20 characters"></td>
+				<td class="signup-error">{{ passwordError }}</td>
+			</tr>
+		</table><br><br>
+		<input v-if="showSubmit" type="submit">
+	</form>
+</div>
+</body>
+<script src="./static/signin.js"></script>
+</html>
