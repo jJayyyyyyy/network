@@ -121,7 +121,7 @@ var app = new Vue({
 			if( this.artwork.type === 'update' ){
 				var reDigit = /^\d+$/;
 				if( reDigit.test(this.artwork.id) && this.artwork.id>0 ){
-					this.error.id = null;
+					this.error.id = '';
 				}else{
 					this.error.id = 'Invalid ID';
 					valid = false;
@@ -129,14 +129,14 @@ var app = new Vue({
 			}
 
 			if( this.artwork.subject ){
-				this.error.subject = null;
+				this.error.subject = '';
 			}else{
-				this.error.subject = 'Invalid Content';
+				this.error.subject = 'Invalid Subject';
 				valid = false;
 			}
 
 			if( this.artwork.content ){
-				this.error.content = null;
+				this.error.content = '';
 			}else{
 				this.error.content = 'Invalid Content';
 				valid = false;
