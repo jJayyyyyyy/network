@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ASCII Art</title>
+	<link rel="stylesheet" href="./static/artwork.css">
+	<script src="./static/vue.js"></script>
+	<script src="./static/axios.js"></script>
+</head>
+<body>
+
+<!-- template for the modal component -->
+<script type="text/x-template" id="modal-template">
+	<transition name="modal">
+		<div class="modal-mask">
+			<div class="modal-wrapper">
+				<div class="modal-container">
+
+					<div class="modal-header">
+						<slot name="header">signin</slot>
+					</div>
+
+					<div class="modal-body">
+						<slot name="body">
+							<table>
+								<tr>
+									<td>username</td>
+									<td><input v-model="user.username"></td>
+									<td class="error">{{ error.username }}</td>
+								</tr>
+								<tr>
+									<td>password</td>
+									<td><input v-model="user.password"></td>
+									<td class="error">{{ error.password }}</td>
+								</tr>
+							</table>
+						</slot>
+					</div>
+
+					<div class="modal-footer">
+						<slot name="footer">
+							<button class="modal-default-button" v-on:click="signin">Sign In</button>
+							<button v-on:click="cancel">Cancel</button>
+						</slot>
+					</div>
+				</div>
+			</div>
+		</div>
+	</transition>
+</script>
+
+	<div id="artwork">
+		<modal v-if="showSigninModal" v-on:cancel="reset" v-on:succ="submit"></modal>
+		<table>
+			<tr>
+				<td><button><a href="/">Home</a></button></td>
+				<td><button v-on:click="setAddArtwork">Add Artwork</button></td>
+				<td><button v-on:click="setUpdateArtwork">Update Artwork</button></td>
+				<td><button v-on:click="setModal">Sign In</button></td>
+			</tr>
+		</table><br><br>
+
+		<div v-if="artwork.type">
+			<table>
+				<tr v-if="artwork.type === 'update'">
+					<td class="label">ID</td>
+					<td><input v-model="artwork.id" type="text"></td>
+					<td class="error">{{ error.id }}</td>
+				</tr>
+				<tr>
+					<td class="label">Subject</td>
+					<td><input v-model="artwork.subject" type="text"></td>
+					<td class="error">{{ error.subject }}</td>
+				</tr>
+				<tr>
+					<td class="label">Content</td>
+					<td><textarea v-model="artwork.content"></textarea></td>
+					<td class="error">{{ error.content }}</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td align="right">
+						<button v-on:click="submit">Submit</button>
+						<button v-on:click="reset">Cancel</button>
+					<td></td>
+				</tr>
+			</table>
+		</div><hr>
+		<div v-if="artworkList">
+			<div v-for="artwork in artworkList" class="artwork">
+				<div>
+					<span class="artwork-subject">Subject: {{ artwork['subject'] }}</span>
+					<span class="artwork-id">ID: {{ artwork['id'] }}</span>
+				</div>
+				<pre class="artwork-content">{{ artwork['content'] }}</pre>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="./static/artwork.js"></script>
+</html>
+

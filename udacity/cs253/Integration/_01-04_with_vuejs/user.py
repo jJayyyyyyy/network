@@ -44,7 +44,7 @@ def check_pw_hash(username, password, pw_hash):
 
 class User(object):
 	def __init__(self, form):
-		self.user_id = str(form.get('user_id'))
+		self.uid = str(form.get('uid'))
 		self.username = form.get('username')
 		self.password = form.get('password')
 		self.email = form.get('email')
@@ -99,21 +99,23 @@ def check_usable(form):
 class SignupHandler(Page):
 	filename = 'signup.html'
 	def get(self):
-		return self.render(self.filename)
+		return self.render_raw(self.filename)
 
 	def post(self):
-		form = check_valid(self.form() )	# check if valid
+		form = check_valid( self.form() )	# check if valid
 		if form.get('valid') == True:
 			form = check_usable(self.form())	# check if exist
 			if form.get('usable') == True:
 				return self.register(form)
-		return self.render(self.filename, **form)
+		print('failed')
+		return self.render_raw(self.filename)
 
 	def register(self, form):
 		Record(form).insert()
 		record_list = Record(form).retrieve()
 		if record_list:
 			user = User(form)
+			print('succ')
 			return self.login(user)	# login and set cookie
 		else:
 			return 'Oops...something went wrong...'
@@ -124,7 +126,8 @@ class SigninHandler(Page):
 		if self.check_valid_cookie():
 			return self.redirect('/welcome')
 		else:
-			return self.render(self.filename)
+			# return self.render(self.filename)
+			return self.render_raw(self.filename)
 
 	def post(self):
 		us_form = self.form()
@@ -137,7 +140,8 @@ class SigninHandler(Page):
 			if check_pw_hash(us_username, us_pw, pw_hash):
 				user = User(record)
 				return self.login(user)# sign in and set cookie
-		return self.render(self.filename, error='invalid login')
+		# return self.render(self.filename, error='invalid login')
+		return self.render_raw(self.filename)
 		
 class SignoutHandler(Page):
 	def get(self):
