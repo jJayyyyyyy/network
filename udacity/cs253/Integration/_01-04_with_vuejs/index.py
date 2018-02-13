@@ -1,6 +1,6 @@
 from page import Page
 
 class IndexHandler(Page):
-	filename = 'index.html'
+	filename = 'index/index.html'
 	def get(self):
-		return self.render(self.filename)
+		return self.render_raw(self.filename)

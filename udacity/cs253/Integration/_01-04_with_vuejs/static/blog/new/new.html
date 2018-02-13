@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>New Post</title>
+		<link type="text/css" rel="stylesheet" href="/static/blog/new/new.css">
+		<script src="/static/vue.js"></script>
+		<script src="/static/axios.js"></script>
+	</head>
+	<body>
+		<ul>
+			<li class="navibar"><a href="/">Home</a></li>
+			<li class="navibar"><a href="/blog/new">new</a></li>
+		</ul>
+		<a href="/blog" class="blog-title">Blog</a>
+		<h2>Make a new post</h2>
+		<form method="post">
+			<label>
+				<div>Subject</div>
+				<input type="text" name="subject" required>
+			</label>
+			<label>
+				<div>Content</div>
+				<textarea name="content" required></textarea>
+			</label>
+			<div class="error"></div>
+			<br>
+			<input type="submit">
+		</form>
+	</body>
+	<script src="/static/blog/new/new.js"></script>
+</html>

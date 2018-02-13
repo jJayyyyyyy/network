@@ -1,6 +1,5 @@
 from page import Page
 from database import Database
-import json
 
 class Artwork(object):
 	def __init__(self, id='', subject='', content=''):
@@ -31,27 +30,15 @@ class Record(Artwork):
 		args = (id, )
 		Database().query_db(query, args)
 
-def get_artwork_list(record_list=[]):
-	artwork_list=[]
-	
-	for record in record_list:
-		artwork = {}
-		for key in record.keys():
-			artwork[key] = record[key]
-		artwork_list.append(artwork)
-	# for record in record_list:
-		# artwork = Artwork(*record)
-		# artwork_list.append(artwork)
-	return artwork_list
-
 class AsciiArtHandler(Page):
-	filename = 'artwork.html'
+	filename = 'artwork/artwork.html'
 
 	def get(self):
-		
-		
-		# return self.render(self.filename, artwork_list=artwork_list)
-		return self.render_raw(self.filename)
+		if self.get_args('q') == 'json':
+			record_list = Record().retrieve(limit=10)
+			return self.json_response(record_list)
+		else:
+			return self.render_raw(self.filename)
 
 	def post(self):
 		if self.check_valid_cookie():
@@ -59,32 +46,16 @@ class AsciiArtHandler(Page):
 			form = self.form()
 			subject = form.get('subject')
 			content = form.get('content')
-			id = form.get('id')
 			if subject and content:
+				id = form.get('id')
 				if id:
 					Record(id, subject, content).update()
-					print('update')
+					# 不必重新读取数据库并返回json，而是直接告诉前端，刚才提交的数据是合理的，在前端直接用本地数据更新dom即可
+					return 'updated'
 				else:
 					Record(0, subject, content).insert()
-					print('insert')
-			
-			
-			record_list = Record().retrieve(limit=10)
-			artwork_list = get_artwork_list(record_list)
-			
-			data = json.dumps(artwork_list, ensure_ascii=False)
-			with open('./assets/artwork.json', 'w') as f:
-				f.write(data)
-			# return data
-			return self.json_response(data=data)
-			# return ArtworkHandler().get()
-			# return self.render_raw(self.filename)
+					return 'inserted'
+			else:
+				return 'invalid form'
 		else:
-			# print('unlogged')
 			return 'signin'
-
-class ArtworkHandler(Page):
-	filename = 'artwork.json'
-	
-	def get(self):
-		return self.json_response(self.filename)

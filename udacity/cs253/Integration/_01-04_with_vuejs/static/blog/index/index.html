@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Blog</title>
+	<link rel="stylesheet" href="/static/blog/index/index.css">
+	<script src="/static/vue.js"></script>
+	<script src="/static/axios.js"></script>
+</head>
+<body>
+	<div id="index">
+		<ul>
+			<li class="navibar"><a href="/">Home</a></li>
+			<li class="navibar"><a href="/blog/new">New</a></li>
+		</ul>
+	
+		<a href="/blog" class="blog-title">Blog</a>
+		<div v-if="postList">
+			<div v-for="post in postList" class="post">
+				<div class="heading">
+					<span>
+						<a v-bind:href="post.id | getPostUrl" class="subject">{{ post.subject }}</a>
+					</span>
+					<span class="date">{{ post.update_date }}</span>
+				</div>
+				<br><br>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="/static/blog/index/index.js"></script>
+</html>

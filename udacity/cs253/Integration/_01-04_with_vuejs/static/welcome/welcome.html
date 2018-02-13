@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Welcome</title>
+		<link type="text/css" rel="stylesheet" href="/static/welcome/welcome.css">
+		<script src="/static/vue.js"></script>
+		<script src="/static/axios.js"></script>
+	</head>
+    <body>
+        <div id="welcome">
+        	<button><a href="/">Home</a></button>
+            <div v-if="userList">
+                <h2 v-for="user in userList">Welcome, {{ user.username }}</h2>
+            </div>
+        </div>
+	</body>
+	<script src="/static/welcome/welcome.js"></script>
+</html>

@@ -39,7 +39,8 @@ def insert_user():
 
 def get_record_list():
 	# sql = 'select * from artworks'
-	sql = 'select * from users'
+	# sql = 'select * from users'
+	sql = 'select * from posts'
 	record_list = do_sql(sql)
 	# sql = 'select username from users where username=?'
 	# args = ('1234', )
@@ -78,7 +79,7 @@ def test():
 	# print(record_list[0]['username'])
 	for item in record_list:
 		print(*item)
-		print(dict(item).get('username'))
+		# print(dict(item).get('username'))
 	# 	print(item['username'])
 	
 

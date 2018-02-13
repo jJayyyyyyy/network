@@ -97,7 +97,7 @@ def check_usable(form):
 	return form
 
 class SignupHandler(Page):
-	filename = 'signup.html'
+	filename = 'user/signup/signup.html'
 	def get(self):
 		return self.render_raw(self.filename)
 
@@ -121,12 +121,11 @@ class SignupHandler(Page):
 			return 'Oops...something went wrong...'
 		
 class SigninHandler(Page):
-	filename = 'signin.html'
+	filename = 'user/signin/signin.html'
 	def get(self):
 		if self.check_valid_cookie():
 			return self.redirect('/welcome')
 		else:
-			# return self.render(self.filename)
 			return self.render_raw(self.filename)
 
 	def post(self):

@@ -23,7 +23,7 @@ var comp = Vue.component('modal', {
 				password: ''
 			}
 		},
-		checkValid: function(){
+		checkValidSignin: function(){
 			var valid = true;
 			if(this.user.username){
 				this.error.username = '';
@@ -41,19 +41,19 @@ var comp = Vue.component('modal', {
 			return valid;
 		},
 		signin: function(){
-			if( this.checkValid() ){
+			if( this.checkValidSignin() ){
 				var self = this;
-				console.log(self.user);
-				axios.post('./signin', self.user)
+				// console.log(self.user);
+				axios.post('/signin', self.user)
 					.then( function(resp){
-						console.log(resp);
+						// console.log(resp);
 						if(resp.data === 'welcome'){
 							self.reset();
 							self.$emit('succ');
 						}else{
 							self.error.username = 'Invalid login';
 							self.error.password = 'Invalid login';
-							console.log('Invalid login');
+							// console.log('Invalid login');
 						}
 					} );
 			}
@@ -68,6 +68,7 @@ var comp = Vue.component('modal', {
 var app = new Vue({
 	el: '#artwork',
 	data: {
+		pathname: '',
 		resp: '',
 		showSigninModal: false,
 		error:{
@@ -84,7 +85,8 @@ var app = new Vue({
 		artworkList: []
 	},
 	created: function(){
-		this.getArtworkList()
+		this.pathname = document.location.pathname;
+		this.getArtworkList();
 	},
 
 	methods:{
@@ -110,13 +112,7 @@ var app = new Vue({
 			};
 			this.showSigninModal = false;
 		},
-		setModal: function(){
-			this.showSigninModal = true;
-		},
-		resetModal: function(){
-			this.showSigninModal = false;
-		},
-		checkValid: function(){
+		checkValidArtwork: function(){
 			var valid = true;
 			if( this.artwork.type === 'update' ){
 				var reDigit = /^\d+$/;
@@ -144,29 +140,32 @@ var app = new Vue({
 			return valid;
 		},
 		submit: function(){
-			if( this.checkValid() === true ){
-				// todo: post
+			if( this.checkValidArtwork() === true ){
+				var APIpost = `${this.pathname}`;
 				var self = this;
-				axios.post('./ascii_art', this.artwork)
+				axios.post(APIpost, self.artwork)
 					.then( function (resp){
 						self.resp = resp;
 						if(resp.data === 'signin'){
-							self.setModal();
-							console.log('showSigninModal');
-							// fill the modal signin form
-						}else if(resp.headers['content-type'] === 'application/json'){
+							// fill in the modal signin form
+							self.showSigninModal = true;
+						}else if(resp.data === 'inserted'){
 							// todo 增加过渡效果
-							console.log('succ');
+							self.artworkList.unshift(self.artwork);
 							self.reset();
-							self.artworkList = resp.data;
+						}else if(resp.data === 'updated'){
+							var index = self.artworkList.length - self.artwork.id;
+							self.artworkList[index] = self.artwork;
+							self.reset()
 						}
 					})
 			}
 		},
 
 		getArtworkList: function(){
+			var APIjson = `${this.pathname}?q=json`;
 			var self = this;
-			axios.get('./assets/artwork.json')
+			axios.get(APIjson)
 				.then(function(resp){
 					self.artworkList = resp.data;
 				})

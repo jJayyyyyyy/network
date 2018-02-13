@@ -1,6 +1,7 @@
 import datetime, hmac
-from flask import render_template, request, redirect, make_response, json
+from flask import render_template, request, redirect, make_response
 from flask.views import MethodView
+import json
 
 hkey = 'DK'.encode()
 
@@ -14,12 +15,15 @@ class Page(MethodView):
 		return self.hsts(render_template(filename, **kw))
 		
 	def render_raw(self, filename):
-		filename = './templates/%s' % filename
+		filename = './static/%s' % filename
 		with open(filename, 'r') as f:
 			return self.hsts(f.read())
 
-	def redirect(self, url):
-		return self.hsts(redirect(url))
+	def redirect(self, target):
+		return self.hsts(redirect(target))
+
+	def get_referer(self):
+		return request.headers.get('referer')
 
 	def get_date(self, year=0, month=0, day=0):
 		if year and month and day:
@@ -53,7 +57,11 @@ class Page(MethodView):
 		if request.is_json:
 			resp = make_response('welcome')
 		else:
-			resp = make_response(self.redirect('/welcome'))
+			target = '/welcome'
+			if self.get_args('redirect'):
+				# /welcome?redirect=/blog/new 
+				target += '?redirect=%s' % self.get_args('redirect')
+			resp = make_response(self.redirect(target))
 		resp.set_cookie(key='username', value=user.username)
 		
 		uid = user.uid
@@ -69,12 +77,16 @@ class Page(MethodView):
 		username = self.cookies().get('username')
 		return check_secure_cookie(val, username)
 
-	def json_response(self, filename='artwork.json', data=''):
-		if data:
-			resp = make_response(data)
-		else:
-			with open('./assets/%s' % filename) as f:
-				resp = make_response(f.read())
+	def json_response(self, record_list=[], data=''):
+		if record_list:
+			item_list = []
+			for record in record_list:
+				item = {}
+				for key in record.keys():
+					item[key] = record[key]
+				item_list.append(item)
+			data = json.dumps(item_list, ensure_ascii=False)
+		resp = make_response(data)
 		resp.headers['content-type'] = 'application/json'	
 		return resp
 
@@ -90,7 +102,6 @@ def make_secure_cookie(uid, username):
 	val = '%s|%s' % (uid, digest)
 	return val
 
-# TODO
 def check_secure_cookie(val, username):
 	if val:
 		uid = val.split('|')[0]

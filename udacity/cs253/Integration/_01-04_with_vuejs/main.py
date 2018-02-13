@@ -3,9 +3,9 @@ from rot13 import ROT13Handler
 from fizzbuzz import FizzBuzzHandler
 from index import IndexHandler
 from welcome import WelcomeHandler
-from artwork import AsciiArtHandler, ArtworkHandler
+from artwork import AsciiArtHandler
 from database import init_db
-from blog import BlogIndexHandler, NewPostHandler, GetPostHandler, EditPostHandler
+from blog import BlogIndexHandler, NewBlogpostHandler, BlogPostHandler
 from user import SignupHandler, SigninHandler, SignoutHandler
 
 # create app
@@ -25,11 +25,10 @@ if __name__ == '__main__':
 	app.add_url_rule('/fizzbuzz', view_func=FizzBuzzHandler.as_view('fizzbuzz'))
 	app.add_url_rule('/welcome', view_func=WelcomeHandler.as_view('welcome'))
 	app.add_url_rule('/ascii_art', view_func=AsciiArtHandler.as_view('ascii_art'))
-	app.add_url_rule('/assets/artwork.json', view_func=ArtworkHandler.as_view('artwork'))
-	app.add_url_rule('/blog', view_func=BlogIndexHandler.as_view('blog_index'))
-	app.add_url_rule('/blog/new_post', view_func=NewPostHandler.as_view('new_post'))
-	app.add_url_rule('/blog/<int:id>', view_func=GetPostHandler.as_view('post'))
-	app.add_url_rule('/blog/edit/<int:id>', view_func=EditPostHandler.as_view('edit_post'))
+	app.add_url_rule('/blog/', view_func=BlogIndexHandler.as_view('blog_index'))
+	app.add_url_rule('/blog/new', view_func=NewBlogpostHandler.as_view('new_blogpost'))
+	app.add_url_rule('/blog/<int:id>', view_func=BlogPostHandler.as_view('blogpost'))
+	# app.add_url_rule('/blog/edit/<int:id>', view_func=EditPostHandler.as_view('edit_post'))
 	app.add_url_rule('/signup', view_func=SignupHandler.as_view('signup'))
 	app.add_url_rule('/signin', view_func=SigninHandler.as_view('signin'))
 	app.add_url_rule('/signout', view_func=SignoutHandler.as_view('signout'))
