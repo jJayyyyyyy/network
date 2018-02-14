@@ -7,6 +7,7 @@ from artwork import AsciiArtHandler
 from database import init_db
 from blog import BlogIndexHandler, NewBlogpostHandler, BlogPostHandler
 from user import SignupHandler, SigninHandler, SignoutHandler
+from nba import NBAHandler
 
 # create app
 app = Flask(__name__)
@@ -32,5 +33,6 @@ if __name__ == '__main__':
 	app.add_url_rule('/signup', view_func=SignupHandler.as_view('signup'))
 	app.add_url_rule('/signin', view_func=SigninHandler.as_view('signin'))
 	app.add_url_rule('/signout', view_func=SignoutHandler.as_view('signout'))
+	app.add_url_rule('/nba', view_func=NBAHandler.as_view('nba'))
 	app.run(port=8080, host='0.0.0.0', debug=True)
 	# app.run(port=8080, host='0.0.0.0', debug=False)

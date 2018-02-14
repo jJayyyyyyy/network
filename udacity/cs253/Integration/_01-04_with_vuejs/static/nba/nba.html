@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+		<title>NBA</title>
+		<link rel="stylesheet" href="/static/nba/nba.css" >
+		<script src="/static/vue.js"></script>
+		<script src="/static/axios.js"></script>
+</head>
+<body>
+	<div id="nba">
+		<h1>NBA statistics</h1>
+		<div class="nba-container">
+			<div class="east-container">
+				<div class="east-head"><h2>东部联盟</h2></div>
+				<div class="east-table">
+					<table>
+						<thead>
+							<tr>
+								<th>东南赛区</th>
+								<th>中部赛区</th>
+								<th>大西洋赛区</th>
+							</tr>
+						</thead>
+						<tbody v-if="teamList">
+							<tr v-for="row in 5">
+								<td v-for="col in 3">
+									<a v-bind:href="getTeamHomepage('east', col, row)">
+										<img v-bind:src="getTeamLogo('east', col, row)" width="60">
+										<span>{{ getTeamName('east', col, row) }}</span>
+									</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="west-container">
+				<div class="west-head"><h2>西部联盟</h2></div>
+				<div class="west-table">
+					<table>
+						<thead>
+							<tr>
+								<th>太平洋赛区</th>
+								<th>西北赛区</th>
+								<th>西南赛区</th>
+							</tr>
+						</thead>
+						<tbody v-if="teamList">
+							<tr v-for="row in 5">
+								<td v-for="col in 3">
+									<a v-bind:href="getTeamHomepage('west', col, row)">
+										<img v-bind:src="getTeamLogo('west', col, row)" width="60">
+										<span>{{ getTeamName('west', col, row) }}</span>
+									</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="/static/nba/nba.js"></script>
+</html>
