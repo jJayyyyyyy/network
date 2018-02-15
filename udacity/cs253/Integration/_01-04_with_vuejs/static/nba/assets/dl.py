@@ -43,6 +43,7 @@ def get_team_stat(teamQqId):
 	try:
 		resp = sess.get(url, headers=headers, params=params).text
 		data = json.loads(resp)['data']
+		data['regStatRank'].pop('teamId')
 		team_stat = {'rank': data['regStatRank']}
 	except Exception as e:
 		logging.exception(e)
@@ -59,9 +60,9 @@ def make_team_list():
 		data = json.loads(f.read())
 	
 	team_list = []
-	for conf in league:
-		# print(conf)
-		for region in league[conf]:
+	for conf, regionList in sorted(league.items()):
+		print(conf)
+		for region in regionList:
 			qq_team_list = data[region]
 			for qq_team in qq_team_list:
 				teamQqId = int(qq_team['teamId'])
