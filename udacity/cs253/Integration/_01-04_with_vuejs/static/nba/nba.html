@@ -6,9 +6,31 @@
 		<script src="/static/vue.js"></script>
 		<script src="/static/axios.js"></script>
 </head>
+
+<script type="text/x-template" id="polygraph-template">
+	<g>
+		<polygon v-bind:points="rankPoints"></polygon>
+	</g>
+</script>
+
+<script type="text/x-template" id="polygraph-base-template">
+	<g>
+		<polygon v-bind:points="base1" class="base"></polygon>
+		<polygon v-bind:points="base2" class="base"></polygon>
+		<polygon v-bind:points="base3" class="base"></polygon>
+		<polygon v-bind:points="base4" class="base"></polygon>
+		<polygon v-bind:points="axis" class="base"></polygon>
+	</g>
+</script>
+
+<script type="text/x-template" id="axis-label-template">
+	<text v-bind:x="label.x" v-bind:y="label.y">{{ label.name }}</text>
+</script>
+
 <body>
 	<div id="nba">
 		<h1>NBA statistics</h1>
+
 		<div class="nba-container">
 			<div class="east-container">
 				<div class="east-head"><h2>东部联盟</h2></div>
@@ -26,7 +48,7 @@
 								<td v-for="col in 3">
 									<a v-bind:href="getTeamHomepage('east', col, row)">
 										<img v-bind:src="getTeamLogo('east', col, row)" width="60">
-										<span>{{ getTeamName('east', col, row) }}</span>
+										<span v-on:mouseover="setCurId('east', col, row)">{{ getTeamName('east', col, row) }}</span>
 									</a>
 								</td>
 							</tr>
@@ -50,7 +72,7 @@
 								<td v-for="col in 3">
 									<a v-bind:href="getTeamHomepage('west', col, row)">
 										<img v-bind:src="getTeamLogo('west', col, row)" width="60">
-										<span>{{ getTeamName('west', col, row) }}</span>
+										<span v-on:mouseover="setCurId('west', col, row)">{{ getTeamName('west', col, row) }}</span>
 									</a>
 								</td>
 							</tr>
@@ -59,6 +81,20 @@
 				</div>
 			</div>
 		</div>
+
+		<div class="chart-container" v-if="teamList">
+			<div></div>
+			<div class="tooltip">
+				<svg width="300" height="300">
+					<polygraph v-if="curId" v-bind:id="curId"></polygraph>
+					<polygraph-base></polygraph-base>
+					<axis-label v-for="(label, index) in labelList" v-bind:label="label" v-bind:key="index"></axis-label>
+				</svg>
+				<span class="tooltiptext">{{ tooltipText }}</span>
+			</div>
+			<div></div>
+		</div>
+
 	</div>
 </body>
 <script src="/static/nba/nba.js"></script>

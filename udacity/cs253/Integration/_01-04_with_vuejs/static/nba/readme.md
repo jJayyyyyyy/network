@@ -1,3 +1,20 @@
+Component template should contain exactly one root element.
+
+要把script给圈起来
+http://www.cnblogs.com/liziyou/p/6708537.html
+
+
+全局变量要放在最上面，否则
+
+func ref
+
+global var
+
+func def
+
+这样是没法引用到全局变量的
+
+
 ##	TODO: 增加radar chart
 
 *	component
