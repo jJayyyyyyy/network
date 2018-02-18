@@ -15,3 +15,7 @@ td.signup_label {
 td.signup_error {
 	color: red;
 }
+
+a {
+    text-decoration: none;
+}
