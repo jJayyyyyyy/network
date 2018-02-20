@@ -1,0 +1,31 @@
+.site-header {
+  background-color: rgba(0, 0, 0, .70);
+}
+
+body {
+	font-size: 24px;
+}
+
+.jumbotron {
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 180px;
+    padding-bottom: 180px;
+    background-image: url('/static/index/mc.jpg');
+    background-repeat: no-repeat;
+    background-position: 85% top;
+}
+
+img {
+    display: block;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    /*float: none;*/
+    /*margin:auto;*/
+    /*text-align: center;*/
+}
+
+a {
+    text-decoration: none;
+}
