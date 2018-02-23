@@ -1,70 +1,119 @@
 <!doctype html>
 <html>
-
 	<head>
 		<title>Chris</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+		<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+		<link rel="stylesheet" href="/static/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="/static/index/index.css">
+		<link rel="shortcut icon" href="/static/favicon.ico">
+		<link rel="stylesheet" href="/static/fa.css">
 	</head>
 
 <body>
-
 	<div class="container">
+		<header class="blog-header py-3 row justify-content-between">
 
-		<header class="blog-header py-3">
+				<div class="col-md-auto">
+					<a href="/"><i class="fas fa-home fa-2x"></i></a>
+				</div><!-- col-md-auto -->
 
-			<div class="col">
-				<div class="d-flex flex-row-reverse">
+				<div class="col">
+					<nav class="nav justify-content-center">
+						<a class="nav-link" href="#">Blog</a>
+						<a class="nav-link" href="#">NBA</a>
+						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Games</a>
+						<div class="dropdown-menu">
+							<a class="dropdown-item" href="#">MineSweeper</a>
+							<a class="dropdown-item" href="#">FB</a>
+						</div><!-- dropdown-menu -->
+					</nav><!-- nav -->
+				</div>
+
+				<div class="col-md-auto">
 					<div class="dropdown">
-						<button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">User
-						<div class="dropdown-menu"  aria-labelledby="dropdownMenuButton">
+						<i class="fas fa-user fa-2x" data-toggle="dropdown" id="icon-user"></i>
+						<div class="dropdown-menu">
 							<a class="dropdown-item" href="#">Sign In</a>
 							<a class="dropdown-item" href="#">Sign Up</a>
-						</div>
-					</div>
-				</div>
-			</div>
+						</div><!-- dropdown-menu -->
+					</div><!-- dropdown -->
+				</div><!-- col-md-auto -->
 
-		</header>
-
-
-
-		<div py-3>
-			<nav class="nav d-flex justify-content-between">
-				<a class="nav-link" href="#">Home</a>
-				<a class="nav-link" href="#">Blog</a>
-				<a class="nav-link" href="#">NBA</a>
-
-				<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Games</a>
-				<div class="dropdown-menu">
-					<a class="dropdown-item" href="#">MineSweeper</a>
-					<a class="dropdown-item" href="#">FB</a>
-				</div>
-
-			</nav>
-		</div>
+		</header><!-- header -->
 
 		<div class="jumbotron jumbotron-fluid">
-			<div class="container">
-				<!-- <h1 class="lead-5">我的世界</h1> -->
-			</div>
-		</div>
-
-		<main role="main" class="container"></main>
-
-	</div>
+		</div><!-- jumbotron -->
+	</div><!-- container -->
 
 
+	<main id="vindex" role="main" class="container">
+		<div class="row" id="news-src">
+			<div class="col">
+				<div id="news-source">
+					<ul class="nav nav-pills justify-content-center">
+						<li class="nav-item">
+							<a class="nav-link active" href="#pill-ReadHub" data-toggle="pill" v-on:click="switchNewsSrc(1)">
+								ReadHub
+							</a>
+						</li><!-- nav-item -->
+						<li class="nav-item">
+							<a class="nav-link" href="#pill-36Kr" data-toggle="pill" v-on:click="switchNewsSrc(2)">
+								36Kr News
+							</a>
+						</li><!-- nav-item -->
+					</ul><!-- nav nav-pills -->
+				</div><!-- news-source -->
+			</div><!-- col -->
+		</div><!-- row -->
+
+		<div class="row">
+			<div class="col-md-10 blog-main">
+				<div id="accordion">
+					<div id="news-area" v-if="newsList" v-for="(news, key) in newsList" v-bind:key="key">
+						<div class="card">
+							<div class="card-header">
+								<div class="row justify-content-between">
+									<h2 class="col-md-auto blog-post-title">
+										<a href="" data-toggle="collapse" v-bind:data-target="'#'+key">{{ news.subject }}</a>
+									</h2>
+									<p class="col-md-auto blog-post-meta">{{ news.date | calcTimeLag }}</p>
+								</div><!-- row -->
+							</div><!-- card-header -->
+							<div class="collapse" v-bind:id="key" data-parent="#accordion">
+								<p class="card-body">{{ news.content }}</p>
+							</div>
+						</div><!-- card -->
+					</div><!-- news-area newlist -->
+				</div><!-- accordion -->
+
+
+				<nav class="blog-pagination">
+					<button type="button" v-on:click="goPrev()" class="btn btn-outline-primary" v-bind:class="{ disabled: frontend }">{{ prevPage() }}</button>
+					<button type="button" v-on:click="goNext()" class="btn btn-outline-primary" v-bind:class="{ disabled: backend }">{{ nextPage() }}</button>
+				</nav><!-- nav pagination -->
+
+				<button id="myBtn" title="Go to top" v-on:click="backToTop">Top</button>
+			</div><!-- blog-main -->
+		</div><!-- div-row -->
+	</main><!-- main -->
 
 
 
-
-
-
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<footer class="blog-footer">
+		<p>Blog template built for <a href="https://getbootstrap.com/">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+	</footer><!-- footer -->
 </body>
+
+<script src="/static/vue.js"></script>
+<script src="/static/axios.js"></script>
+<script src="/static/index/index.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
+<script src="/static/jquery-3.2.1.slim.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script> -->
+<script src="/static/popper.min.js"></script>
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script> -->
+<script src="/static/bootstrap.min.js"></script>
+
 </html>
