@@ -12,7 +12,7 @@
 	</head>
 
 <body>
-	<div class="container">
+	<div class="container" id="headers">
 		<header class="blog-header py-3 row justify-content-between">
 
 				<div class="col-md-auto">
@@ -45,7 +45,7 @@
 
 		<div class="jumbotron jumbotron-fluid">
 		</div><!-- jumbotron -->
-	</div><!-- container -->
+	</div><!-- class="container" id="headers" -->
 
 
 	<main id="vindex" role="main" class="container">
@@ -94,7 +94,8 @@
 					<button type="button" v-on:click="goNext()" class="btn btn-outline-primary" v-bind:class="{ disabled: backend }">{{ nextPage() }}</button>
 				</nav><!-- nav pagination -->
 
-				<button id="myBtn" title="Go to top" v-on:click="backToTop">Top</button>
+				<!-- <button >Top</button> -->
+				<i class="fas fa-angle-up fa-2x" id="go-to-top" title="Go to top" v-on:click="goToTop"></i>
 			</div><!-- blog-main -->
 		</div><!-- div-row -->
 	</main><!-- main -->
@@ -102,7 +103,16 @@
 
 
 	<footer class="blog-footer">
-		<p>Blog template built for <a href="https://getbootstrap.com/">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+		<p>
+			<a href="https://github.com/jJayyyyyyy"><i class="fab fa-github fa-2x" style="color:black;"></i></a>
+		</p>
+		<p>
+			Thanks <i class="fas fa-heart" style="color:Tomato; "></i>
+			<a href="https://getbootstrap.com/" style="color:#563d7c">Bootstrap</a>
+			<a href="https://vuejs.org/" style="color:#4fc08d">Vue.js</a>
+			<a href="https://github.com/axios/axios" style="color:#fe7c38">axios</a>
+			<a href="https://fontawesome.com/" style="color:#228ae6">FontAwesome</a>
+		</p>
 	</footer><!-- footer -->
 </body>
 
