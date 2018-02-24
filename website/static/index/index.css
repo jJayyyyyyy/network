@@ -115,3 +115,15 @@ main {
 .dropdown-menu {
   border-radius: 0.5rem;
 }
+
+.modal-header{
+  border-bottom: none;
+}
+
+.modal-footer{
+  border-top: none;
+}
+
+.table td{
+  border: none;
+} 

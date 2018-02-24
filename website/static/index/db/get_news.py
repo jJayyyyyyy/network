@@ -28,7 +28,8 @@ def get_readhub():
 			news['subject'] = item['title']
 			news['content'] = item['summary']
 			newsList.append(news)
-		with open('readhub.json', 'w') as f:
+		filename = './static/index/db/readhub.json'
+		with open(filename, 'w') as f:
 			f.write(json.dumps(newsList, ensure_ascii=False))
 	except Exception as e:
 		logging.exception(e)
@@ -46,7 +47,8 @@ def get_36kr():
 			news['subject'] = item['title']
 			news['content'] = item['description']
 			newsList.append(news)
-		with open('36kr.json', 'w') as f:
+		filename = './static/index/db/36kr.json'
+		with open(filename, 'w') as f:
 			f.write(json.dumps(newsList, ensure_ascii=False))
 	except Exception as e:
 		logging.exception(e)
@@ -55,6 +57,7 @@ def get_36kr():
 def update():
 	get_readhub()
 	get_36kr()
+	print('updated')
 
 update()
 

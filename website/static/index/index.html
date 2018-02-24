@@ -15,31 +15,65 @@
 	<div class="container" id="headers">
 		<header class="blog-header py-3 row justify-content-between">
 
-				<div class="col-md-auto">
-					<a href="/"><i class="fas fa-home fa-2x"></i></a>
-				</div><!-- col-md-auto -->
+			<div class="col-md-auto">
+				<a href="/"><i class="fas fa-home fa-2x"></i></a>
+			</div><!-- col-md-auto -->
 
-				<div class="col">
-					<nav class="nav justify-content-center">
-						<a class="nav-link" href="#">Blog</a>
-						<a class="nav-link" href="#">NBA</a>
-						<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Games</a>
-						<div class="dropdown-menu">
-							<a class="dropdown-item" href="#">MineSweeper</a>
-							<a class="dropdown-item" href="#">FB</a>
-						</div><!-- dropdown-menu -->
-					</nav><!-- nav -->
-				</div>
+			<div class="col">
+				<nav class="nav justify-content-center">
+					<a class="nav-link" href="/blog">Blog</a>
+					<a class="nav-link" href="/nba">NBA</a>
+					<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Games</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="#">MineSweeper</a>
+						<a class="dropdown-item" href="#">FB</a>
+					</div><!-- dropdown-menu -->
+				</nav><!-- nav -->
+			</div>
 
-				<div class="col-md-auto">
-					<div class="dropdown">
-						<i class="fas fa-user fa-2x" data-toggle="dropdown" id="icon-user"></i>
-						<div class="dropdown-menu">
-							<a class="dropdown-item" href="#">Sign In</a>
-							<a class="dropdown-item" href="#">Sign Up</a>
-						</div><!-- dropdown-menu -->
-					</div><!-- dropdown -->
-				</div><!-- col-md-auto -->
+			<div id="user-modal" class="col-md-auto" >
+				<div class="dropdown">
+					<i class="fas fa-user fa-2x" data-toggle="dropdown" id="icon-user"></i>
+					<div class="dropdown-menu">
+						<button type="button" class="dropdown-item btn btn-link" data-toggle="modal" data-target="#signinModal">Sign In</button>
+						<a href="/signup" class="dropdown-item btn btn-link">Sign Up</a>
+					</div><!-- dropdown-menu -->
+				</div><!-- dropdown -->
+			</div><!-- user-modal col-md-auto -->
+
+
+			<div class="modal fade" id="signinModal">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Sign In</h5>
+							<button type="button" class="close" data-dismiss="modal">
+								<span>&times;</span>
+							</button>
+						</div><!-- modal-header -->
+						<div class="modal-body">
+							<table class="table">
+								<tr>
+									<td>username</td>
+									<td>
+										<input class="form-control" placeholder="Enter email">
+									</td>
+								</tr>
+								<tr>
+									<td>Password</td>
+									<td>
+										<input type="password" class="form-control" placeholder="Password">
+									</td>
+								</tr>
+							</table>
+						</div><!-- modal-body -->
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary">Submit</button>
+						</div><!-- modal-footer -->
+					</div><!-- modal-content -->
+				</div><!-- modal-dialog -->
+			</div><!-- signinModal -->
 
 		</header><!-- header -->
 
@@ -71,12 +105,12 @@
 		<div class="row">
 			<div class="col-md-10 blog-main">
 				<div id="accordion">
-					<div id="news-area" v-if="newsList" v-for="(news, key) in newsList" v-bind:key="key">
+					<div id="news-item" v-if="newsList" v-for="(news, key) in newsList" v-bind:key="key">
 						<div class="card">
-							<div class="card-header">
+							<div class="card-header" data-toggle="collapse" v-bind:data-target="'#'+key" style="cursor: pointer">
 								<div class="row justify-content-between">
 									<h2 class="col-md-auto blog-post-title">
-										<a href="" data-toggle="collapse" v-bind:data-target="'#'+key">{{ news.subject }}</a>
+										{{ news.subject }}
 									</h2>
 									<p class="col-md-auto blog-post-meta">{{ news.date | calcTimeLag }}</p>
 								</div><!-- row -->

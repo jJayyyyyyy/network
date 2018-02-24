@@ -3,6 +3,8 @@
 var app = new Vue({
 	el: '#vindex',
 	data: {
+		pathname: '',
+		lm: '',
 		newsList36kr: [],
 		newsListReadHub: [],
 		newsList: null,
@@ -13,6 +15,8 @@ var app = new Vue({
 		totalPage: 2
 	},
 	created: function(){
+		this.pathname = document.location.pathname;
+		this.lm = document.lastModified;
 		this.getJsonData();
 	},
 	filters: {
@@ -93,14 +97,14 @@ var app = new Vue({
 		},
 		getJsonData: function(){
 			var self = this;
-			var APIJsonReadHub = '/static/index/db/readhub.json';
-			var APIJson36kr = '/static/index/db/36kr.json';
+			var APIJsonReadHub = `${self.pathname}?q=json&src=readhub`;
 			axios.get(APIJsonReadHub)
 				.then( function(resp){
 					self.newsListReadHub = resp.data;
 					var page = 1;
 					self.getNewsList(page);
 				})
+			var APIJson36kr = `${self.pathname}?q=json&src=36kr`;
 			axios.get(APIJson36kr)
 				.then( function(resp){
 					self.newsList36kr = resp.data;
@@ -121,7 +125,7 @@ var app = new Vue({
 
 // When the user scrolls down 20px from the top of the document, show the button
 window.onscroll = function(){
-	if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+	if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
 		document.getElementById("go-to-top").style.display = "block";
 	} else {
 		document.getElementById("go-to-top").style.display = "none";
