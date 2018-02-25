@@ -21,19 +21,10 @@ h1, h2, h3, h4, h5, h6 {
     /*background-position: 85% top;*/
 }
 
-img {
-    display: block;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    /*float: none;*/
-    /*margin:auto;*/
-    /*text-align: center;*/
-}
-
 #go-to-top {
   display: block;
   position: fixed;
+  padding: 16px;
   bottom: 160px;
   right: 80px;
   cursor: pointer;
@@ -129,4 +120,4 @@ main {
 
 .table td{
   border: none;
-} 
+}
