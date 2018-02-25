@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>New Post</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/static/bootstrap.min.css">
+	<link rel="stylesheet" href="/static/fa.css">
+	<link type="text/css" rel="stylesheet" href="/static/blog/new/new.css">
+</head>
+
+<body>
+	<div class="container" id="headers">
+		<header class="blog-header py-3 row justify-content-between">
+
+			<div class="col-md-auto">
+				<a href="/"><i class="fas fa-home fa-2x"></i></a>
+			</div><!-- col-md-auto -->
+
+			<div class="col">
+				<nav class="nav justify-content-center">
+					<a class="nav-link" href="/blog">Blog</a>
+					<a class="nav-link" href="/nba">NBA</a>
+					<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Games</a>
+					<div class="dropdown-menu">
+						<a class="dropdown-item" href="#">MineSweeper</a>
+						<a class="dropdown-item" href="#">FB</a>
+					</div><!-- dropdown-menu -->
+				</nav><!-- nav -->
+			</div>
+
+			<div id="user-menu" class="col-md-auto" >
+				<div class="dropdown">
+					<i class="fas fa-user fa-2x" data-toggle="dropdown" id="icon-user"></i>
+					<div class="dropdown-menu">
+						<button type="button" class="dropdown-item btn btn-link" data-toggle="modal" data-target="#signinModal">Sign In</button>
+						<a href="/signup" class="dropdown-item btn btn-link">Sign Up</a>
+					</div><!-- dropdown-menu -->
+				</div><!-- dropdown -->
+			</div><!-- user-modal col-md-auto -->
+
+		</header><!-- header -->
+
+		<div class="row">
+			<div class="col text-center">
+				<a href="/blog" class="nav-link blog-logo">Blog</a>
+			</div>
+		</div>
+	</div><!-- class="container" id="headers" -->
+
+	<main id="editor" class="container">
+
+		<div class="row">
+			<div class="col">
+				<input name="subject" class="form-control" placeholder="Subject">
+			</div>
+		</div>
+
+		<div class="row" style="height: 600px; margin-top:20px">
+			<div class="col" style="width: 50%; padding-right: 0px">
+				<textarea name="content" v-model="content" style="width: 100%; height: 100%; padding: 12px; resize:none;" required></textarea>
+			</div>
+			<div class="col" style="width: 50%; padding-left: 0px;  background: #e9ecef; overflow: auto;" >
+				<div v-html="compiledMarkdown()"></div>
+			</div>
+		</div>
+
+	</main>
+
+
+
+</body>
+
+<script src="/static/vue.js"></script>
+<script src="/static/axios.js"></script>
+<script src="/static/markdown-it.js"></script>
+<script src="/static/blog/new/new.js"></script>
+<script src="/static/jquery-3.2.1.slim.min.js"></script>
+<script src="/static/popper.min.js"></script>
+<script src="/static/bootstrap.min.js"></script>
+</html>
