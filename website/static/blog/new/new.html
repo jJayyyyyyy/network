@@ -1,6 +1,5 @@
 <!doctype html>
 <html>
-
 <head>
 	<title>New Post</title>
 	<meta charset="utf-8">
@@ -12,69 +11,75 @@
 
 <body>
 	<div class="container" id="headers">
-		<header class="blog-header py-3 row justify-content-between">
+		<header class="blog-header py-3 row">
 
-			<div class="col-md-auto">
+			<div id="home-icon" class="col text-left">
 				<a href="/"><i class="fas fa-home fa-2x"></i></a>
-			</div><!-- col-md-auto -->
-
-			<div class="col">
-				<nav class="nav justify-content-center">
-					<a class="nav-link" href="/blog">Blog</a>
-					<a class="nav-link" href="/nba">NBA</a>
-					<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Games</a>
-					<div class="dropdown-menu">
-						<a class="dropdown-item" href="#">MineSweeper</a>
-						<a class="dropdown-item" href="#">FB</a>
-					</div><!-- dropdown-menu -->
-				</nav><!-- nav -->
 			</div>
 
-			<div id="user-menu" class="col-md-auto" >
+			<div id="dropdown-menu" class="col text-right" >
 				<div class="dropdown">
-					<i class="fas fa-user fa-2x" data-toggle="dropdown" id="icon-user"></i>
+					<i class="fas fa-bars fa-2x" data-toggle="dropdown" id="icon-user"></i>
 					<div class="dropdown-menu">
-						<button type="button" class="dropdown-item btn btn-link" data-toggle="modal" data-target="#signinModal">Sign In</button>
-						<a href="/signup" class="dropdown-item btn btn-link">Sign Up</a>
-					</div><!-- dropdown-menu -->
-				</div><!-- dropdown -->
-			</div><!-- user-modal col-md-auto -->
+						<a href="/blog" class="btn dropdown-item">Blog</a>
+						<a href="/nba" class="btn dropdown-item">NBA</a>
 
-		</header><!-- header -->
+						<button class="btn dropdown-item dropdown-toggle" data-toggle="dropdown">Games</button>
+						<div class="dropdown-menu">
+							<a class="dropdown-item" href="#">MineSweeper</a>
+							<a class="dropdown-item" href="#">FB</a>
+						</div>
 
-		<div class="row">
-			<div class="col text-center">
-				<a href="/blog" class="nav-link blog-logo">Blog</a>
-			</div>
+					</div>
+				</div>
+			</div><!-- dropdown-menu col text-right -->
+
+		</header>
+
+		<div class="col text-center">
+			<div id="new-post-logo">新的文章</div>
 		</div>
 	</div><!-- class="container" id="headers" -->
 
 	<main id="editor" class="container">
 
-		<div class="row">
+		<div id="blog-post-subject" class="row" >
 			<div class="col">
-				<input name="subject" class="form-control" placeholder="Subject">
+				<input name="subject" class="form-control" placeholder="标题" v-model="subject">
 			</div>
 		</div>
 
-		<div class="row" style="height: 600px; margin-top:20px">
-			<div class="col" style="width: 50%; padding-right: 0px">
-				<textarea name="content" v-model="content" style="width: 100%; height: 100%; padding: 12px; resize:none;" required></textarea>
-			</div>
-			<div class="col" style="width: 50%; padding-left: 0px;  background: #e9ecef; overflow: auto;" >
-				<div v-html="compiledMarkdown()"></div>
+		<div id="blog-post-content" class="row">
+			<div class="col">
+				<textarea class="form-control" name="content" v-model="content" placeholder="内容" v-model="content"></textarea>
 			</div>
 		</div>
 
-	</main>
+		<div id="blog-post-footer" class="row">
+			<div class="col text-right">
+				<a href="/blog" class="btn btn-secondary">返回</a>
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#infoModal" v-on:click="submit">提交</button>
+			</div>
+		</div>
 
+		<div v-if="showModal()" class="modal fade" id="infoModal">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header"></div>
+					<div class="modal-body text-center">
+						<h3>标题和内容要写完整~</h3>
+					</div>
+					<div class="modal-footer text-right">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+					</div>
+				</div>
+			</div>
+		</div><!-- infoModal -->
 
-
+	</main><!-- main - editor -->
 </body>
-
 <script src="/static/vue.js"></script>
 <script src="/static/axios.js"></script>
-<script src="/static/markdown-it.js"></script>
 <script src="/static/blog/new/new.js"></script>
 <script src="/static/jquery-3.2.1.slim.min.js"></script>
 <script src="/static/popper.min.js"></script>

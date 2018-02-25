@@ -1,19 +1,34 @@
 'use strict';
-var md = window.markdownit();
 
 var app = new Vue({
 	el: '#editor',
 	data: {
-		content: '# hello',
-		cmd: ''
+		pathname: '',
+		subject: '',
+		content: '',
+		valid: false,
 	},
-	// computed: {
-
-	// },
+	created: function(){
+		this.pathname = document.location.pathname;
+	},
 	methods: {
-		compiledMarkdown: function () {
-			var self = this;
-			return md.render(self.content);
+		showModal: function(){
+			this.valid = this.subject != '' && this.content != '';
+			return !this.valid;
+		},
+		submit: function(){
+			if( this.valid ){
+				var self = this;
+				var APIpost = `${self.pathname}`;
+				var newPost = {
+					'subject': self.subject,
+					'content': self.content,
+				};
+				axios.post(APIpost, newPost)
+					.then( function(resp){
+						window.location.replace(resp.data)
+					})
+			}
 		}
 	}
 })
