@@ -93,13 +93,16 @@ main {
 
 .card {
   border: none;
-  margin-bottom: 24px;
 }
 
 .card-header{
   background-color: transparent;
-  margin-bottom: 0px;
-  border-bottom: none;
+  padding-bottom: 24px;
+  border: none;
+}
+
+.card-header:hover{
+  background-color: #e9ecef45;
 }
 
 .blog-pagination {
