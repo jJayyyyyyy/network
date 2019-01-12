@@ -1,16 +1,16 @@
 ##	Intro
 
-*	使用 Python 和 C 实现了一个简单的 HTTP client, 基本功能是通过 TCP 向 server 发出连接请求, TCP 携带的数据遵循 HTTP 格式, `request headers` 内容如下
+*	使用 `Python` 和 `C` 实现了一个简单的 `HTTP client`, 基本功能是通过 `TCP` 向 `server` 发出连接请求, `TCP` 携带的数据遵循 `HTTP` 格式, `request headers` 内容如下
 
 	```
 	GET / HTTP/1.1\r\nHost: github.com\r\nConnection: close\r\n\r\n
 	```
 
-*	仅用于网络编程学习和 http 连接测试, https 需要另外处理
+*	仅用于网络编程学习和 `HTTP` 连接测试, `HTTPS` 需要另外处理
 
-*	目标网站是 github.com (如果换成 sina.com.cn, 则会返回更多信息)
+*	目标网站是 `github.com` (如果换成 `sina.com.cn`, 则会返回更多信息)
 
-	client 发出 http request 访问 http://github.com 后, 如果网络正常, 会收到 server 发过来的 http response, 而且是一条 302 重定向信息, 其内容如下
+	`client` 发出 `http request` 访问 `http://github.com` 后, 如果网络正常, 会收到 `server` 发过来的 `http response`, 而且是一条 `302` 重定向信息, 其内容如下
 
 	*	未解码
 
@@ -20,16 +20,16 @@
 
 	*	解码后
 
-		'''
+		```
 		HTTP/1.1 301 Moved Permanently
 		Content-length: 0
 		Location: https://github.com/
 		Connection: close
 
 
-		'''
+		```
 
-	我们把这个重定向信息(http response)打印出来, 然后退出程序, 测试完成
+	我们把这个重定向信息(`http response`)打印出来, 然后退出程序, 测试完成
 
 	<br>
 
